@@ -12,7 +12,7 @@
   "data_info": {
     "mode": "snapshot",
     "detail": "Statistics Canada’s Labour Force Survey provides monthly, seasonally adjusted three-month averages for seven labour market indicators.",
-    "cadence": "Monthly",
+    "cadence": "Checked weekly",
     "probes": [
       {"label": "Snapshot retrieved", "url": "https://coolcode.ca/metroeconomy/data/summary.json", "path": ["retrieved"], "count_at": {"path": ["count"], "unit": "metro areas"}},
       {"label": "Months covered", "url": "https://coolcode.ca/metroeconomy/data/summary.json", "path": ["start"], "end_path": ["through"]}
