@@ -38,3 +38,10 @@ export function points(points, x, y) {
   }).join(" ");
 }
 export function csvCell(v) { return '"'+String(v??"").replaceAll('"','""')+'"'; }
+export function rateReading(current, previous) {
+  if (![current,previous].every(Number.isFinite)) return "";
+  const delta=Math.round((current-previous)*10)/10;
+  if(delta===0) return `The unemployment rate held at ${display(current,0)}.`;
+  const size=Math.abs(delta);
+  return `The unemployment rate ${delta>0?"rose":"fell"} by ${size.toFixed(1)} percentage ${size===1?"point":"points"}, from ${display(previous,0)} to ${display(current,0)}.`;
+}

@@ -1,4 +1,4 @@
-import {definitions, monthName, shift, display, change, monthRange, points, csvCell, number} from "./model.mjs";
+import {definitions, monthName, shift, display, change, monthRange, points, csvCell, rateReading} from "./model.mjs";
 const byId = id => document.getElementById(id);
 const controlIds = ["left","right","month","lag","metric","span"];
 const params = new URLSearchParams(location.search);
@@ -43,6 +43,8 @@ function metroCard(city, records, month, before) {
     row.insertCell().textContent=display(value,metric);
     row.insertCell().textContent=change(value,records[before]?.[metric],metric);
   }
+  const reading=rateReading(records[month]?.[0],records[before]?.[0]);
+  if(reading) card.append(element("p",reading,"reading"));
   card.append(table);
   if(city.smallSample && before < "2025-09") card.append(element("p","Statistics Canada flags greater sampling variability here before September 2025.","note"));
   return card;
