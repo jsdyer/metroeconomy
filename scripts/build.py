@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build a browser tool using Python's standard library; no network required."""
+from distribution import publish_dataset
 from html import escape
 import json
 from pathlib import Path
@@ -58,6 +59,8 @@ def build(root=ROOT):
             if placeholder not in page:
                 raise ValueError(f"Missing template placeholder: {placeholder}")
             page = page.replace(placeholder, escape(tool[key], quote=True))
+        label, dataset = publish_dataset(stage)
+        page = page.replace("{{EDITION}}", escape(label)).replace("{{DATASET_JSON}}", dataset)
         slug = tool["id"]
         on_coolcode = (
             slug != "coolcode-tool-template"

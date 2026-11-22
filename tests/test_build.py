@@ -1,3 +1,4 @@
+import csv
 import json
 from pathlib import Path
 import shutil
@@ -59,6 +60,22 @@ class BuildTests(unittest.TestCase):
         self.edit(data_info={"mode": "local", "detail": ""})
         with self.assertRaisesRegex(ValueError, "homepage card"):
             metadata(self.root)
+
+    def test_crawlable_distribution_has_all_observations(self):
+        build(self.root)
+        dist = self.root / "dist"
+        page = (dist / "index.html").read_text()
+        markup = json.loads(page.partition('type="application/ld+json">')[2].partition("</script>")[0])
+        self.assertEqual(markup["@type"], "Dataset")
+        distribution = markup["distribution"]["contentUrl"].split("/metroeconomy/")[1]
+        summary = json.loads((dist / "data/summary.json").read_text())
+        with (dist / distribution).open() as f:
+            rows = list(csv.DictReader(f))
+        self.assertEqual(len({r["cma"] for r in rows}), summary["count"])
+        current = next(r for r in rows if r["end_month"] == summary["through"]
+                       and r["cma"] == "205" and r["indicator"] == "Employment")
+        self.assertEqual(current["unit"], "persons")
+        self.assertGreater(int(current["value"]), 100000)
 
     def test_browser_access_is_explicit(self):
         self.edit(access="install")
