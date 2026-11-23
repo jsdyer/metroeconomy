@@ -3,7 +3,15 @@
   "title": "Metro Economy",
   "description": "Compare employment and unemployment across Canadian metropolitan areas and see how their labour markets changed.",
   "category": "money",
-  "tags": ["Statistics Canada", "jobs", "labour force", "employment", "unemployment", "Halifax", "Vancouver"],
+  "tags": [
+    "Statistics Canada",
+    "jobs",
+    "labour force",
+    "employment",
+    "unemployment",
+    "Halifax",
+    "Vancouver"
+  ],
   "icon": "chart-candlestick",
   "url": "/metroeconomy/",
   "source": "https://github.com/jsdyer/metroeconomy",
@@ -12,10 +20,31 @@
   "data_info": {
     "mode": "snapshot",
     "detail": "Statistics Canada’s Labour Force Survey provides monthly, seasonally adjusted three-month averages for seven labour market indicators.",
-    "cadence": "Checked weekly",
+    "cadence": "Weekly",
     "probes": [
-      {"label": "Snapshot retrieved", "url": "https://coolcode.ca/metroeconomy/data/summary.json", "path": ["retrieved"], "count_at": {"path": ["count"], "unit": "metro areas"}},
-      {"label": "Months covered", "url": "https://coolcode.ca/metroeconomy/data/summary.json", "path": ["start"], "end_path": ["through"]}
+      {
+        "label": "Snapshot retrieved",
+        "url": "https://coolcode.ca/metroeconomy/data/summary.json",
+        "path": [
+          "retrieved"
+        ],
+        "count_at": {
+          "path": [
+            "count"
+          ],
+          "unit": "metro areas"
+        }
+      },
+      {
+        "label": "Months covered",
+        "url": "https://coolcode.ca/metroeconomy/data/summary.json",
+        "path": [
+          "start"
+        ],
+        "end_path": [
+          "through"
+        ]
+      }
     ]
   }
 }
