@@ -67,7 +67,7 @@ def extract(z):
     return index, records
 
 
-def save(index, records, destination):
+def save(index, records, destination, checked_at=None):
     destination.mkdir(parents=True, exist_ok=True)
     path = destination / "summary.json"
     old = json.loads(path.read_text()) if path.exists() else {}
@@ -80,9 +80,15 @@ def save(index, records, destination):
         if not target.exists() or target.read_text() != body:
             target.write_text(body, encoding="utf-8")
             modified = True
-    if modified or {k: v for k, v in old.items() if k != "retrieved"} != index:
+    if modified or {k: v for k, v in old.items() if k not in ("retrieved", "checked_at")} != index:
         index["retrieved"] = datetime.now(timezone.utc).date().isoformat()
-        path.write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    else:
+        index["retrieved"] = old["retrieved"]
+    if checked_at:
+        index["checked_at"] = checked_at
+    elif not modified and old.get("checked_at"):
+        index["checked_at"] = old["checked_at"]
+    path.write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"{index['count']} metropolitan areas, {index['start']} to {index['through']}")
 
 
@@ -97,4 +103,5 @@ if __name__ == "__main__":
             archive = io.BytesIO(response.read())
     with zipfile.ZipFile(archive) as z:
         summary, series = extract(z)
-    save(summary, series, ROOT / "web/data")
+    checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds") if not args.zip else None
+    save(summary, series, ROOT / "web/data", checked_at=checked_at)

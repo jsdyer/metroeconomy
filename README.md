@@ -18,7 +18,7 @@ Employment, unemployment, labour force and population are estimated numbers of p
 
 ## Collection and publishing
 
-The checked-in snapshot makes the explorer usable immediately. The refresh workflow checks the official bulk ZIP each Friday and replaces the snapshot when an observation, coverage or metadata changes. The recorded retrieval date belongs to the saved edition. A changed snapshot triggers the Pages build, including the [complete CSV](https://coolcode.ca/metroeconomy/data/metro-economy.csv) and structured dataset metadata. A failed download leaves the published site in place.
+The checked-in snapshot makes the explorer usable immediately. The refresh workflow checks the official bulk ZIP each Friday and replaces the snapshot when an observation, coverage or metadata changes. The recorded retrieval date belongs to the saved edition. `data/summary.json.checked_at` records each successful online source check, including unchanged data, and is used by the watchdog. Older snapshots use their known retrieval day at midnight UTC until the next online check; offline builds never substitute the current time. A changed snapshot triggers the Pages build, including the [complete CSV](https://coolcode.ca/metroeconomy/data/metro-economy.csv) and structured dataset metadata. A failed download leaves the published site in place.
 
 Run `python3 scripts/collect.py` to retrieve the current release, or pass `--zip PATH` to process a saved official archive. Run `node --test tests/*.test.mjs`, `python3 -m unittest discover -s tests`, and `python3 scripts/build.py` before publishing `dist/`.
 
