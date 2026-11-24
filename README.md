@@ -21,3 +21,11 @@ Employment, unemployment, labour force and population are estimated numbers of p
 The checked-in snapshot makes the explorer usable immediately. The refresh workflow checks the official bulk ZIP each Friday and replaces the snapshot when an observation, coverage or metadata changes. The recorded retrieval date belongs to the saved edition. A changed snapshot triggers the Pages build, including the [complete CSV](https://coolcode.ca/metroeconomy/data/metro-economy.csv) and structured dataset metadata. A failed download leaves the published site in place.
 
 Run `python3 scripts/collect.py` to retrieve the current release, or pass `--zip PATH` to process a saved official archive. Run `node --test tests/*.test.mjs`, `python3 -m unittest discover -s tests`, and `python3 scripts/build.py` before publishing `dist/`.
+
+<!-- schedule-reliability -->
+## Schedule reliability
+
+Public GitHub repositories can have scheduled workflows disabled after 60 days of inactivity. A separate weekly [schedule guard](.github/workflows/schedule-guard.yml) calls GitHub's enable-workflow API for an explicit list of refresh workflows and itself. It can restore workflows disabled for inactivity, preserves manually disabled workflows, and runs independently of collection failures.
+
+This is an interim mitigation, not a scheduling guarantee: GitHub does not document active-workflow renewal as a permanent exemption, and scheduled runs can be delayed or dropped. A scheduler on our own Linux server is the planned independent trigger. The guard does not collect data, create dummy commits, or change source/check timestamps; successful collection and published data freshness still need monitoring.
+<!-- /schedule-reliability -->
