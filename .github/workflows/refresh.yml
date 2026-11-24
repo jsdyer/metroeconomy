@@ -1,5 +1,8 @@
 name: Refresh monthly Labour Force Survey
 on:
+  push:
+    branches: [main]
+    paths: [scripts/collect.py, scripts/public_download.py, .github/workflows/refresh.yml]
   schedule:
     - cron: '17 15 * * 5'
   workflow_dispatch:

@@ -7,7 +7,7 @@ import io
 import json
 from pathlib import Path
 import re
-from urllib.request import urlopen
+from public_download import download_bytes
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,8 +99,7 @@ if __name__ == "__main__":
     if args.zip:
         archive = args.zip
     else:
-        with urlopen(DOWNLOAD, timeout=90) as response:
-            archive = io.BytesIO(response.read())
+        archive = io.BytesIO(download_bytes(DOWNLOAD, limit=120_000_000))
     with zipfile.ZipFile(archive) as z:
         summary, series = extract(z)
     checked_at = datetime.now(timezone.utc).isoformat(timespec="seconds") if not args.zip else None
