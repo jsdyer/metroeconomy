@@ -6,6 +6,8 @@ Compare the labour markets of two Canadian census metropolitan areas using seven
 Compare Halifax with Vancouver or Abbotsford–Mission. Pick a month to see how many people were working or looking for work and how their share of the labour force changed. Share the selected comparison or download the underlying monthly estimates.
 <!-- /coolcode:guide -->
 
+[Browse employment statistics by metro area](https://coolcode.ca/metroeconomy/cities/). The offline Pages build writes a dated HTML result for each qualifying record and lists it in the project sitemap. New records are published with the next successful data build.
+
 ## Reading the figures
 
 Statistics Canada publishes seasonally adjusted three-month moving averages. The October estimate summarizes August through October. Consecutive estimates share two months. Year-over-year changes compare the selected period with the same ending month a year earlier.
